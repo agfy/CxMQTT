@@ -16,11 +16,11 @@
 class CxMQTT
 {
   public:
-    CxMQTT(String wifi, String password, String brokerHost, int brokerPort, const char *caCert, const char *clientCert, const char *clientKey, String clientId, String telemetryTopic, String commandTopic);
+    CxMQTT(String wifi, String password, String brokerHost, int brokerPort, const char *caCert, const char *clientCert, const char *clientKey, String tenantId, String contexts, String clientId);
     void setup();
     void connectToWifi();
     void loop();
-    void sentTelemetry(String telemetry);
+    void sendTelemetry(String telemetry);
 
   private:
     String _wifi, _password, _clientId, _telemetryTopic, _commandTopic, _brokerHost;

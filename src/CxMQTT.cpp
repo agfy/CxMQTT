@@ -22,7 +22,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     onNewCommand(payload, length);
 }
 
-CxMQTT::CxMQTT(String wifi, String password, String brokerHost, int brokerPort, const char *caCert, const char *clientCert, const char *clientKey, String clientId, String telemetryTopic, String commandTopic) :            
+CxMQTT::CxMQTT(String wifi, String password, String brokerHost, int brokerPort, const char *caCert, const char *clientCert, const char *clientKey, String tenantId, String contexts, String clientId) :
                timeClient(ntpUDP, "pool.ntp.org"),
                mqtt(wifiClient)
 {
@@ -34,8 +34,8 @@ CxMQTT::CxMQTT(String wifi, String password, String brokerHost, int brokerPort, 
   _clientCert = clientCert;
   _clientKey = clientKey;
   _clientId = clientId;
-  _telemetryTopic = telemetryTopic;
-  _commandTopic = commandTopic;
+  _telemetryTopic = "tm/"+tenantId+"/"+contexts+"/"+clientId;
+  _commandTopic = "cmd/"+tenantId+"/"+contexts+"/"+clientId;
 }
 
 void CxMQTT::setup()
@@ -119,8 +119,7 @@ void CxMQTT::loop()
     }
 }
 
-
-void CxMQTT::sentTelemetry(String tm)
+void CxMQTT::sendTelemetry(String tm)
 {
     StaticJsonDocument<512> message;
     char sendBuffer[512];
