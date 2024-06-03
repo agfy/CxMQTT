@@ -140,3 +140,7 @@ void CxMQTT::sendTelemetry(String tm)
     mqtt.flush();
     Serial.println();
 }
+
+int CxMQTT::GetTime(){
+    return timeClient.getEpochTime();
+}
