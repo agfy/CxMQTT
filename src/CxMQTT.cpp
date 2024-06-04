@@ -119,19 +119,12 @@ void CxMQTT::loop()
     }
 }
 
-void CxMQTT::sendTelemetry(String tm)
+void CxMQTT::sendTelemetry(JsonArray telemetryArray)
 {
     StaticJsonDocument<512> message;
     char sendBuffer[512];
     message["ID"] = _clientId;
     message["CV"] = "1.0";
-
-    StaticJsonDocument<256> telemetryPayload;
-    JsonArray telemetryArray = telemetryPayload.to<JsonArray>();
-    JsonObject telemetry = telemetryArray.createNestedObject();
-    telemetry["T"] = _clientId;
-    telemetry["V"] = tm;
-    telemetry["TS"] = timeClient.getEpochTime();
     message["TM"] = telemetryArray;
 
     size_t n = serializeJson(message, sendBuffer);
@@ -141,6 +134,6 @@ void CxMQTT::sendTelemetry(String tm)
     Serial.println();
 }
 
-int CxMQTT::GetTime(){
+int CxMQTT::getTime(){
     return timeClient.getEpochTime();
 }

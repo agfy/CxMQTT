@@ -20,8 +20,8 @@ class CxMQTT
     void setup();
     void connectToWifi();
     void loop();
-    void sendTelemetry(String telemetry);
-    int GetTime();
+    void sendTelemetry(JsonArray telemetryArray);
+    int getTime();
 
   private:
     String _wifi, _password, _clientId, _telemetryTopic, _commandTopic, _brokerHost;
